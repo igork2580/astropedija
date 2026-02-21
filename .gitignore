@@ -43,3 +43,8 @@ blob-report/
 coverage/
 
 .vercel
+.claude/
+
+# SSH keys
+hetzner
+hetzner.pub
