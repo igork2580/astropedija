@@ -65,7 +65,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="py-16 text-center sm:py-24">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-          <span className="bg-gradient-to-r from-primary via-primary-light to-secondary bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 bg-clip-text text-transparent">
             {brand.name}
           </span>
         </h1>
