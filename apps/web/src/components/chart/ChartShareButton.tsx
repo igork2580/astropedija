@@ -87,17 +87,22 @@ export function ChartShareButton({
   async function handleShare() {
     setStatus("saving");
     try {
+      const payload = JSON.stringify({
+        chart_type: chartType,
+        input_data: inputData,
+        chart_data: chartData,
+        svg,
+      });
       const res = await fetch("/api/share/save", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chart_type: chartType,
-          input_data: inputData,
-          chart_data: chartData,
-          svg,
-        }),
+        body: payload,
       });
-      if (!res.ok) throw new Error("Failed to save chart");
+      if (!res.ok) {
+        const errBody = await res.text().catch(() => "");
+        console.error("Share save failed:", res.status, errBody);
+        throw new Error("Failed to save chart");
+      }
       const data = await res.json();
       const url = `${window.location.origin}/chart/${data.share_slug}`;
       setShareUrl(url);

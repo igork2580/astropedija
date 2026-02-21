@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ZodiacGrid } from "@/components/zodiac";
 import { CurrentPlanetsWidget, MoonPhaseWidget } from "@/components/sky";
 import { TransitAlertBanner } from "@/components/sky/TransitAlertBanner";
-import { OnboardingModal } from "@/components/onboarding/OnboardingModal";
 import { generateWebSiteSchema } from "@/lib/jsonld";
 import { brand } from "@/lib/brand";
 
@@ -204,8 +203,6 @@ export default function HomePage() {
           <MoonPhaseWidget />
         </div>
       </section>
-      {/* Onboarding Modal (first visit only) */}
-      <OnboardingModal />
     </div>
   );
 }

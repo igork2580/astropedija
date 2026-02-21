@@ -19,13 +19,28 @@ export async function proxyPost(
   request: NextRequest,
   apiPath: string,
 ): Promise<NextResponse> {
-  const body = await request.json();
-  const res = await fetch(`${API_URL}${apiPath}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  const data = await res.json();
+  try {
+    const body = await request.json();
+    const res = await fetch(`${API_URL}${apiPath}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
 
-  return NextResponse.json(data, { status: res.status });
+    const text = await res.text();
+    try {
+      const data = JSON.parse(text);
+      return NextResponse.json(data, { status: res.status });
+    } catch {
+      return NextResponse.json(
+        { error: "Backend returned non-JSON response", status: res.status },
+        { status: 502 },
+      );
+    }
+  } catch (e) {
+    return NextResponse.json(
+      { error: e instanceof Error ? e.message : "Proxy error" },
+      { status: 500 },
+    );
+  }
 }
