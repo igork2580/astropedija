@@ -1,42 +1,45 @@
 import Link from "next/link";
 import { ZodiacGrid } from "@/components/zodiac";
 import { CurrentPlanetsWidget, MoonPhaseWidget } from "@/components/sky";
+import { TransitAlertBanner } from "@/components/sky/TransitAlertBanner";
+import { OnboardingModal } from "@/components/onboarding/OnboardingModal";
 import { generateWebSiteSchema } from "@/lib/jsonld";
+import { brand } from "@/lib/brand";
 
 const featuredCalculators = [
   {
     title: "Natalna karta",
-    description: "Izradite vašu kompletnu natalnu kartu sa detaljnom interpretacijom svih planeta, kuća i aspekata.",
+    description: "Pozicije svih 10 planeta, 12 kuca i medjusobni aspekti — sa tumacenjem na srpskom. Treba vam samo datum, vreme i mesto rodjenja.",
     href: "/izrada-natalne-karte",
     icon: "🗺️",
   },
   {
-    title: "Uporedna karta",
-    description: "Otkrijte kompatibilnost sa partnerom kroz sinastrijsku analizu dve natalne karte.",
+    title: "Uporedna karta (Sinastija)",
+    description: "Postavite dve natalne karte jednu preko druge i vidite gde se slazete, a gde se izazivate. Poredjenje planet po planet.",
     href: "/uporedna-natalna-karta",
     icon: "💑",
   },
   {
     title: "Tranziti",
-    description: "Pogledajte kako trenutni planetarni tranziti utiču na vašu natalnu kartu.",
+    description: "Koje planete trenutno aktiviraju vasu natalnu kartu? Tranzitni pregled pokazuje aktivne aspekte za danasnji datum.",
     href: "/natalna-karta-tranziti",
     icon: "🔄",
   },
   {
     title: "Kompozit horoskop",
-    description: "Saznajte suštinu vaše veze kroz kompozitnu kartu koja predstavlja energiju para.",
+    description: "Jedna karta za dvoje — kompozit racuna srednje tacke izmedju vasih planeta i pokazuje dinamiku veze kao celine.",
     href: "/kompozit-horoskop",
     icon: "🤝",
   },
   {
     title: "Solarni horoskop",
-    description: "Vaš solarski povratak otkriva teme i prilike za narednu godinu života.",
+    description: "Karta za vas sledeci rodjendan. Solarni povratak otkriva kljucne teme, izazove i prilike za narednih 12 meseci.",
     href: "/solarni-horoskop",
     icon: "☀️",
   },
   {
     title: "Numerologija",
-    description: "Izračunajte vaš životni put, broj sudbine i osobine ličnosti kroz numerologiju.",
+    description: "Izracunajte broj zivotnog puta, broj sudbine i licni broj na osnovu datuma rodjenja i punog imena.",
     href: "/numerologija-kalkulator",
     icon: "🔢",
   },
@@ -64,12 +67,12 @@ export default function HomePage() {
       <section className="py-16 text-center sm:py-24">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
           <span className="bg-gradient-to-r from-primary via-primary-light to-secondary bg-clip-text text-transparent">
-            Astropedija
+            {brand.name}
           </span>
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-text-secondary sm:text-xl">
-          Vaša enciklopedija astrologije. Besplatni kalkulatori, natalne karte,
-          dnevni horoskop i sve što želite da znate o zvezdama.
+          Precizni astroloski proracuni, natalne karte sa tumacenjem i enciklopedija
+          sa 600+ clanaka — sve na srpskom, sve besplatno.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
           <Link
@@ -160,9 +163,9 @@ export default function HomePage() {
         <h2 className="mb-8 text-2xl font-bold">Horoskop</h2>
         <div className="grid gap-4 sm:grid-cols-3">
           {[
-            { title: "Dnevni horoskop", href: "/dnevni-horoskop", desc: "Saznajte šta vam zvezde poručuju danas" },
-            { title: "Nedeljni horoskop", href: "/nedeljni-horoskop", desc: "Planirajte nedelju uz astrološki vodič" },
-            { title: "Mesečni horoskop", href: "/mesecni-horoskop", desc: "Pregled najvažnijih mesečnih tranzita" },
+            { title: "Dnevni horoskop", href: "/dnevni-horoskop", desc: "Kratka prognoza za danas — za svaki znak posebno" },
+            { title: "Nedeljni horoskop", href: "/nedeljni-horoskop", desc: "Pregled nedelje po danima: kad potisnuti, kad napraviti potez" },
+            { title: "Mesecni horoskop", href: "/mesecni-horoskop", desc: "Kljucni tranziti meseca i kako uticu na vas znak" },
           ].map((item) => (
             <Link
               key={item.href}
@@ -177,6 +180,13 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Transit Alerts */}
+      <section className="pb-16">
+        <h2 className="mb-6 text-2xl font-bold">Nadolazeći tranziti</h2>
+        <TransitAlertBanner />
+      </section>
+
 
       {/* Current Sky */}
       <section className="pb-16">
@@ -194,6 +204,8 @@ export default function HomePage() {
           <MoonPhaseWidget />
         </div>
       </section>
+      {/* Onboarding Modal (first visit only) */}
+      <OnboardingModal />
     </div>
   );
 }

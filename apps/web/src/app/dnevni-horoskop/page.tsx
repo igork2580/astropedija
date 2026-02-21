@@ -5,7 +5,7 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Dnevni horoskop",
-  description: "Pročitajte dnevni horoskop za sve zodijačke znakove. Saznajte šta vam zvezde poručuju danas.",
+  description: "Dnevni horoskop za svih 12 znakova — ažurira se svakodnevno. Ovan, Bik, Blizanci, Rak, Lav, Devica, Vaga, Škorpija, Strelac, Jarac, Vodolija, Ribe.",
 };
 
 export const revalidate = 3600; // ISR: 1 hour
@@ -16,7 +16,7 @@ export default function DnevniHoroskopPage() {
       <Breadcrumbs items={[{ label: "Početna", href: "/" }, { label: "Dnevni horoskop" }]} />
       <h1 className="mt-6 text-3xl font-bold sm:text-4xl">Dnevni horoskop</h1>
       <p className="mt-3 text-lg text-text-secondary">
-        Izaberite vaš zodijački znak i pročitajte šta vam zvezde poručuju danas.
+        Izaberite znak i pročitajte dnevni horoskop — ljubav, posao, zdravlje, energija dana.
       </p>
       <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
         {zodiacSigns.map((sign) => (

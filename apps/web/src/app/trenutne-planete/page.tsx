@@ -13,8 +13,9 @@ export default function TrenutnePlanetePage() {
       <Breadcrumbs items={[{ label: "Početna", href: "/" }, { label: "Trenutne planete" }]} />
       <h1 className="mt-6 text-3xl font-bold sm:text-4xl">Trenutne planete</h1>
       <p className="mt-3 text-lg text-text-secondary">
-        Pregled trenutnih pozicija svih planeta na nebu, referentna lokacija: Beograd.
-        Podaci se automatski ažuriraju svakih 5 minuta.
+        Trenutne pozicije Sunca, Meseca, Merkura, Venere, Marsa, Jupitera, Saturna,
+        Urana, Neptuna i Plutona — plus Severni i Južni Mesečev čvor. Referentna
+        lokacija: Beograd. Podaci se ažuriraju svakih 5 minuta na osnovu Swiss Ephemeris proračuna.
       </p>
       <div className="mt-8">
         <CurrentPlanetsTable />

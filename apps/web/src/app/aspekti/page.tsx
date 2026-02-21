@@ -4,8 +4,8 @@ import { aspects } from "@/data/aspects";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
 export const metadata: Metadata = {
-  title: "Astrološki aspekti",
-  description: "Saznajte sve o astrološkim aspektima - konjunkcija, opozicija, trigon, kvadrat, sekstil i drugi uglovi između planeta.",
+  title: "Astrološki aspekti — konjunkcija, trigon, kvadrat i drugi",
+  description: "Glavni astrološki aspekti: konjunkcija (0°), sekstil (60°), kvadrat (90°), trigon (120°) i opozicija (180°). Kako planete međusobno razgovaraju u karti.",
 };
 
 export default function AspektiPage() {
@@ -14,7 +14,13 @@ export default function AspektiPage() {
       <Breadcrumbs items={[{ label: "Početna", href: "/" }, { label: "Aspekti" }]} />
       <h1 className="mt-6 text-3xl font-bold sm:text-4xl">Astrološki aspekti</h1>
       <p className="mt-3 text-lg text-text-secondary">
-        Aspekti su uglovi koje planete formiraju međusobno. Oni pokazuju kako se različite energije u karti povezuju.
+        Aspekti pokazuju kako planete u karti „razgovaraju" — mereni su uglom
+        između njih. Pet glavnih aspekata su konjunkcija (0°), sekstil (60°),
+        kvadrat (90°), trigon (120°) i opozicija (180°). Harmonični aspekti
+        (trigon, sekstil) olakšavaju protok energije, dok tenzični (kvadrat,
+        opozicija) stvaraju trenje koje podstiče rast. Konjunkcija pojačava obe
+        planete — da li skladno ili napeto, zavisi od njihove prirode. Standardni
+        orbis za glavne aspekte iznosi 6–10°.
       </p>
       <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
         {aspects.map((aspect) => (

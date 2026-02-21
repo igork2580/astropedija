@@ -4,8 +4,8 @@ import { houses } from "@/data/houses";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
 export const metadata: Metadata = {
-  title: "Astrološke kuće",
-  description: "Saznajte sve o 12 astroloških kuća - oblasti života koje svaka kuća predstavlja i kako ih tumačiti u natalnoj karti.",
+  title: "12 astroloških kuća — oblasti života u natalnoj karti",
+  description: "12 astroloških kuća pokriva oblasti od identiteta do karijere. Zavise od tačnog vremena rođenja i sistema kuća (Placidus, Koch i dr.).",
 };
 
 export default function KucePage() {
@@ -14,7 +14,13 @@ export default function KucePage() {
       <Breadcrumbs items={[{ label: "Početna", href: "/" }, { label: "Kuće" }]} />
       <h1 className="mt-6 text-3xl font-bold sm:text-4xl">Astrološke kuće</h1>
       <p className="mt-3 text-lg text-text-secondary">
-        12 astroloških kuća predstavljaju različite oblasti života. Svaka kuća otkriva gde se energija planeta manifestuje.
+        Kuće u natalnoj karti zavise od tačnog vremena rođenja — razlika od samo
+        4 minuta pomera ascendent za jedan stepen. Najčešći Placidus sistem deli
+        ekliptiku na 12 nejednakih segmenata, gde svaka kuća pokriva konkretnu
+        oblast života: 1. kuća određuje identitet i fizički izgled, 7. partnerstvo,
+        10. karijeru i javni ugled. Planete u kući pojačavaju tu temu, a prazan
+        sektor ne znači da je oblast zanemarena — njen vladar pokazuje gde se
+        energija usmerava.
       </p>
       <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
         {houses.map((house) => (
