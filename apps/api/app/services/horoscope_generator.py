@@ -1,4 +1,4 @@
-"""AI-powered horoscope generator — generates daily horoscopes using current transits."""
+"""AI-powered horoscope generator — generates daily/weekly/monthly horoscopes."""
 
 from datetime import date, timedelta
 
@@ -21,45 +21,94 @@ SIGN_NAMES = {
     "jarac": "Jarac", "vodolija": "Vodolija", "ribe": "Ribe",
 }
 
-
-async def generate_daily_horoscope(sign: str, target_date: date) -> str:
-    """Generate a daily horoscope for a given sign and date."""
-    sign_name = SIGN_NAMES.get(sign, sign.capitalize())
-    prompt = (
-        f"Napiši dnevni horoskop za znak {sign_name} za datum {target_date.isoformat()}.\n\n"
-        f"Format: 3-4 rečenice. Budi konkretan — pomeni oblasti kao ljubav, posao, zdravlje ili finansije. "
-        f"Daj praktičan savet. Ne koristi klišee poput 'Zvezde su na vašoj strani'."
-    )
-    return await ai_service.generate(prompt, max_tokens=300)
+SYSTEM_PROMPT = (
+    "Ti si iskusan astrolog koji pise horoskope na srpskom jeziku. "
+    "Pisi konkretno i prakticno — pomeni oblasti kao ljubav, posao, zdravlje, finansije. "
+    "Daj bar jedan konkretan savet. Ne koristi klisee poput 'Zvezde su na vasoj strani' "
+    "ili 'Univerzum vam salje poruku'. Svaki horoskop mora biti razlicit od prethodnih. "
+    "Ne koristi emoji. Pisi latinicnim pismom bez dijakritika (c umesto c sa kvacicama)."
+)
 
 
-async def generate_daily_horoscopes_if_missing(db: AsyncSession, target_date: date | None = None) -> int:
-    """Generate daily horoscopes for all signs if not yet generated for the target date.
+async def _generate_horoscope(sign: str, horo_type: str, period_start: date, period_end: date) -> str:
+    """Generate a single horoscope via AI."""
+    sign_name = SIGN_NAMES[sign]
+
+    if horo_type == "daily":
+        prompt = (
+            f"Napisi dnevni horoskop za {sign_name} za {period_start.isoformat()}.\n"
+            f"Duzina: 3-4 recenice. Budi konkretan — pomeni bar dve zivotne oblasti."
+        )
+        max_tokens = 300
+    elif horo_type == "weekly":
+        prompt = (
+            f"Napisi nedeljni horoskop za {sign_name} za period "
+            f"{period_start.isoformat()} do {period_end.isoformat()}.\n"
+            f"Duzina: 5-7 recenica. Podeli po danima ili po oblastima (ljubav, posao, zdravlje). "
+            f"Daj konkretan savet za nedelju."
+        )
+        max_tokens = 500
+    else:  # monthly
+        prompt = (
+            f"Napisi mesecni horoskop za {sign_name} za mesec koji pocinje "
+            f"{period_start.isoformat()}.\n"
+            f"Duzina: 8-12 recenica (2-3 pasusa). Pokrij: opsti ton meseca, ljubav i odnose, "
+            f"karijeru i finansije, zdravlje. Pomeni kljucne datume ili periode u mesecu "
+            f"kada treba obratiti paznju. Zavrsi sa konkretnim savetom."
+        )
+        max_tokens = 800
+
+    return await ai_service.generate(prompt, system=SYSTEM_PROMPT, max_tokens=max_tokens)
+
+
+def _get_period(horo_type: str, target: date | None = None) -> tuple[date, date]:
+    """Return (period_start, period_end) for a given type."""
+    if target is None:
+        target = date.today()
+    if horo_type == "daily":
+        return target, target
+    elif horo_type == "weekly":
+        start = target - timedelta(days=target.weekday())
+        return start, start + timedelta(days=6)
+    else:  # monthly
+        start = target.replace(day=1)
+        if target.month == 12:
+            end = target.replace(year=target.year + 1, month=1, day=1) - timedelta(days=1)
+        else:
+            end = target.replace(month=target.month + 1, day=1) - timedelta(days=1)
+        return start, end
+
+
+async def generate_horoscopes_if_missing(
+    db: AsyncSession,
+    horo_type: str,
+    target_date: date | None = None,
+) -> int:
+    """Generate horoscopes for all 12 signs if not already in DB.
 
     Returns the number of horoscopes generated.
     """
-    if target_date is None:
-        target_date = date.today()
+    period_start, period_end = _get_period(horo_type, target_date)
 
     generated = 0
     for sign in ZODIAC_SIGNS:
         existing = await db.execute(
             select(Horoscope).where(
                 Horoscope.sign == sign,
-                Horoscope.type == "daily",
-                Horoscope.period_start == target_date,
+                Horoscope.type == horo_type,
+                Horoscope.period_start == period_start,
             )
         )
         if existing.scalar_one_or_none() is not None:
             continue
 
-        content = await generate_daily_horoscope(sign, target_date)
+        content = await _generate_horoscope(sign, horo_type, period_start, period_end)
         horoscope = Horoscope(
             sign=sign,
-            type="daily",
+            type=horo_type,
             content=content,
-            period_start=target_date,
-            period_end=target_date,
+            period_start=period_start,
+            period_end=period_end,
         )
         db.add(horoscope)
         generated += 1
