@@ -2,6 +2,7 @@ from datetime import datetime
 from fastapi import APIRouter, Query
 from app.models.schemas import CurrentSkyResponse, CurrentSkyPlanet, MoonPhaseResponse
 from app.services.chart_service import _translate_sign, _translate_planet, PLANET_ATTRS
+from app.services.transit_alert_service import get_upcoming_transits
 from app.config import settings
 
 router = APIRouter()
@@ -37,6 +38,12 @@ async def current_sky(
         planets=planets,
         timestamp=now.isoformat(),
     )
+
+
+@router.get("/transits/upcoming")
+async def upcoming_transits(days: int = Query(default=7, ge=1, le=30)):
+    """Get upcoming transit events (sign ingresses, retrograde stations)."""
+    return get_upcoming_transits(days_ahead=days)
 
 
 @router.get("/moon-phases", response_model=list[MoonPhaseResponse])

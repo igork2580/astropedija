@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { brand } from "@/lib/brand";
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -28,7 +29,7 @@ export function Breadcrumbs({ items }: BreadcrumbsProps) {
       position: index + 1,
       name: item.label,
       ...(item.href
-        ? { item: `https://astropedija.com${item.href}` }
+        ? { item: `${brand.url}${item.href}` }
         : {}),
     })),
   };

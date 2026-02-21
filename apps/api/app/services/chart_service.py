@@ -20,6 +20,7 @@ PLANET_NAMES_SR = {
     "Sun": "Sunce", "Moon": "Mesec", "Mercury": "Merkur", "Venus": "Venera",
     "Mars": "Mars", "Jupiter": "Jupiter", "Saturn": "Saturn", "Uranus": "Uran",
     "Neptune": "Neptun", "Pluto": "Pluton", "True_Node": "Severni čvor",
+    "True_North_Lunar_Node": "Severni čvor",
     "Mean_Node": "Severni čvor", "Chiron": "Hiron",
 }
 
@@ -33,8 +34,15 @@ ASPECT_NAMES_SR = {
 PLANET_ATTRS = [
     "sun", "moon", "mercury", "venus", "mars",
     "jupiter", "saturn", "uranus", "neptune", "pluto",
-    "true_node",
+    "true_north_lunar_node",
 ]
+
+HOUSE_NAME_TO_NUM = {
+    "First_House": 1, "Second_House": 2, "Third_House": 3,
+    "Fourth_House": 4, "Fifth_House": 5, "Sixth_House": 6,
+    "Seventh_House": 7, "Eighth_House": 8, "Ninth_House": 9,
+    "Tenth_House": 10, "Eleventh_House": 11, "Twelfth_House": 12,
+}
 
 
 def _translate_sign(sign_abbr: str) -> str:
@@ -51,36 +59,34 @@ def _extract_planets(subject: AstrologicalSubject) -> list[ChartPlanetResponse]:
         planet_obj = getattr(subject, attr, None)
         if planet_obj is None:
             continue
+        house_raw = getattr(planet_obj, "house", 0)
+        house_num = HOUSE_NAME_TO_NUM.get(house_raw, house_raw) if isinstance(house_raw, str) else (house_raw or 0)
         planets.append(ChartPlanetResponse(
             name=_translate_planet(planet_obj.name),
             sign=_translate_sign(planet_obj.sign),
             degree=round(planet_obj.position, 2),
-            house=getattr(planet_obj, "house", 0),
-            retrograde=getattr(planet_obj, "retrograde", False),
+            house=house_num,
+            retrograde=bool(getattr(planet_obj, "retrograde", False)),
         ))
     return planets
 
 
+HOUSE_ORDINALS = [
+    "first", "second", "third", "fourth", "fifth", "sixth",
+    "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth",
+]
+
+
 def _extract_houses(subject: AstrologicalSubject) -> list[ChartHouseResponse]:
     houses_list = []
-    for i in range(1, 13):
-        house_attr = f"house_{i}" if hasattr(subject, f"house_{i}") else None
-        if house_attr:
-            house_obj = getattr(subject, house_attr)
+    for i, ordinal in enumerate(HOUSE_ORDINALS, 1):
+        house_obj = getattr(subject, f"{ordinal}_house", None)
+        if house_obj:
             houses_list.append(ChartHouseResponse(
                 number=i,
                 sign=_translate_sign(house_obj.sign),
                 degree=round(house_obj.position, 2),
             ))
-        else:
-            houses_data = getattr(subject, "houses_list", [])
-            if i <= len(houses_data):
-                h = houses_data[i - 1]
-                houses_list.append(ChartHouseResponse(
-                    number=i,
-                    sign=_translate_sign(getattr(h, "sign", "")),
-                    degree=round(getattr(h, "position", 0), 2),
-                ))
     return houses_list
 
 
@@ -138,8 +144,7 @@ def create_natal_chart(
         tz_str=tz,
     )
     chart = KerykeionChartSVG(subject)
-    chart.makeSVG()
-    svg = process_svg(chart.chartname)
+    svg = process_svg(chart.makeTemplate())
     chart_data = _extract_chart_data(subject)
     return ChartResponse(chart_data=chart_data, svg=svg)
 
@@ -161,8 +166,7 @@ def create_synastry_chart(
         city=p2_city or "Belgrade", lng=p2_lng, lat=p2_lat, tz_str=p2_tz,
     )
     chart = KerykeionChartSVG(subject1, chart_type="Synastry", second_obj=subject2)
-    chart.makeSVG()
-    svg = process_svg(chart.chartname)
+    svg = process_svg(chart.makeTemplate())
 
     data1 = _extract_chart_data(subject1)
     data2 = _extract_chart_data(subject2)
@@ -187,7 +191,6 @@ def create_transit_chart(
         city=city or "Belgrade", lng=lng, lat=lat, tz_str=tz,
     )
     chart = KerykeionChartSVG(subject, chart_type="Transit", second_obj=transit_subject)
-    chart.makeSVG()
-    svg = process_svg(chart.chartname)
+    svg = process_svg(chart.makeTemplate())
     chart_data = _extract_chart_data(subject)
     return ChartResponse(chart_data=chart_data, svg=svg)

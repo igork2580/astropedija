@@ -33,6 +33,13 @@ Thumbs.db
 # Turbo
 .turbo/
 
+# Playwright
+playwright-report/
+test-results/
+blob-report/
+
 # Misc
 *.log
 coverage/
+
+.vercel

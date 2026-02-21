@@ -63,9 +63,7 @@ async def midheaven(data: PlanetPositionRequest):
             city="Belgrade", lng=data.longitude, lat=data.latitude,
             tz_str=data.timezone,
         )
-        house_10 = getattr(subject, "house_10", None) or (
-            subject.houses_list[9] if hasattr(subject, "houses_list") else None
-        )
+        house_10 = getattr(subject, "tenth_house", None)
         if house_10:
             return AscendantResponse(
                 sign=_translate_sign(house_10.sign),

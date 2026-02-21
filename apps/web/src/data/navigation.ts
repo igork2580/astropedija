@@ -42,6 +42,8 @@ export const mainNavigation: NavItem[] = [
       { label: "Kompozit horoskop", href: "/kompozit-horoskop" },
       { label: "Tranziti", href: "/natalna-karta-tranziti" },
       { label: "Solarni horoskop", href: "/solarni-horoskop" },
+      { label: "Progresivna karta", href: "/progresivna-karta" },
+      { label: "Davison karta", href: "/davison-karta" },
       { label: "Numerologija", href: "/numerologija-kalkulator" },
     ],
   },
@@ -63,6 +65,7 @@ export const mainNavigation: NavItem[] = [
     href: "/trenutne-planete",
     children: [
       { label: "Trenutne planete", href: "/trenutne-planete" },
+      { label: "Nadolazeći tranziti", href: "/tranziti" },
       { label: "Mesečeve faze", href: "/meseceve-faze" },
     ],
   },

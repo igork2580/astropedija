@@ -106,10 +106,12 @@ class MoonPhaseResponse(BaseModel):
 
 
 class GeoSearchResult(BaseModel):
+    model_config = {"populate_by_name": True}
+
     name: str
     lat: float
     lng: float
-    country_name: str
+    country_name: str = Field(alias="countryName", serialization_alias="countryName")
     timezone: str
 
 

@@ -2,17 +2,21 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    app_name: str = "Astropedija API"
+    app_name: str = "AstroPut API"
     debug: bool = False
 
-    database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/astropedija"
+    database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/astroput"
 
     geonames_username: str = ""
+    anthropic_api_key: str = ""
+    jwt_secret: str = "change-me-in-production"
+    jwt_algorithm: str = "HS256"
+    jwt_expiration_hours: int = 24
 
     cors_origins: list[str] = [
         "http://localhost:3000",
-        "https://astropedija.com",
-        "https://www.astropedija.com",
+        "https://astroput.com",
+        "https://www.astroput.com",
     ]
 
     default_latitude: float = 44.8176

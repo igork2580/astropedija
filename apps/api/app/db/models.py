@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime, date
-from sqlalchemy import String, Text, Date, DateTime, Float, Integer, JSON
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import String, Text, Date, DateTime, Float, Integer, JSON, Boolean, ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from app.db.database import Base
 
@@ -62,3 +62,53 @@ class ContactSubmission(Base):
     email: Mapped[str] = mapped_column(String(200))
     message: Mapped[str] = mapped_column(Text)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+
+class AICache(Base):
+    __tablename__ = "ai_cache"
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    cache_key: Mapped[str] = mapped_column(String(255), unique=True, index=True)
+    content: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    expires_at: Mapped[datetime] = mapped_column(DateTime, index=True)
+
+
+class TransitWeather(Base):
+    __tablename__ = "transit_weather"
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    date: Mapped[date] = mapped_column(Date, unique=True, index=True)
+    content: Mapped[str] = mapped_column(Text)
+    planetary_data: Mapped[dict] = mapped_column(JSONB)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    email: Mapped[str] = mapped_column(String(255), unique=True, index=True)
+    name: Mapped[str] = mapped_column(String(100))
+    hashed_password: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    provider: Mapped[str] = mapped_column(String(20), default="credentials")  # credentials, google
+    sign_preference: Mapped[str | None] = mapped_column(String(20), nullable=True)
+    is_premium: Mapped[bool] = mapped_column(Boolean, default=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    charts: Mapped[list["UserChart"]] = relationship(back_populates="user", cascade="all, delete-orphan")
+
+
+class UserChart(Base):
+    __tablename__ = "user_charts"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"), index=True)
+    chart_type: Mapped[str] = mapped_column(String(20))
+    label: Mapped[str] = mapped_column(String(100))
+    input_data: Mapped[dict] = mapped_column(JSONB)
+    chart_data: Mapped[dict] = mapped_column(JSONB)
+    svg: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    user: Mapped["User"] = relationship(back_populates="charts")

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { brand } from "@/lib/brand";
 
 /* ------------------------------------------------------------------ */
 /*  Footer column data                                                 */
@@ -9,7 +10,7 @@ const footerColumns = [
   {
     title: "O nama",
     links: [
-      { label: "O Astropediji", href: "/o-nama" },
+      { label: "O nama", href: "/o-nama" },
       { label: "Kontakt", href: "/kontakt" },
       { label: "Politika privatnosti", href: "/politika-privatnosti" },
       { label: "Uslovi koriscenja", href: "/uslovi-koriscenja" },
@@ -92,12 +93,12 @@ export function Footer() {
             className="text-lg font-bold text-text-primary transition-colors hover:text-primary"
           >
             <span className="mr-1">&#9733;</span>
-            Astropedija
+            {brand.name}
           </Link>
 
           {/* Copyright */}
           <p className="text-sm text-text-muted">
-            &copy; 2026 Astropedija. Sva prava zadrzana.
+            {brand.copyright}
           </p>
         </div>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DualBirthDataForm } from "./DualBirthDataForm";
+import { WizardDualCalculatorForm } from "./wizard";
 import { ChartViewer, ChartDataTable, ChartShareButton } from "@/components/chart";
 import type { ChartResponse } from "@/types";
 
@@ -10,12 +10,14 @@ export function SynastryCalculator() {
 
   return (
     <div className="space-y-8">
-      <DualBirthDataForm
-        apiEndpoint="/api/charts/synastry"
-        storageKey="synastry"
-        onResult={setResult}
-      />
-      {result && (
+      {!result ? (
+        <WizardDualCalculatorForm
+          apiEndpoint="/api/charts/synastry"
+          storageKey="synastry"
+          onResult={setResult}
+          submitLabel="Izradi uporednu kartu"
+        />
+      ) : (
         <>
           <div className="flex justify-center">
             <ChartShareButton

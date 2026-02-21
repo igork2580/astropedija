@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalculatorForm } from "./CalculatorForm";
+import { WizardCalculatorForm } from "./wizard";
 import { ChartViewer, ChartDataTable, ChartShareButton } from "@/components/chart";
 import type { ChartResponse } from "@/types";
 
@@ -10,14 +10,13 @@ export function TransitCalculator() {
 
   return (
     <div className="space-y-8">
-      <div className="rounded-2xl border border-border bg-surface p-6">
-        <CalculatorForm
+      {!result ? (
+        <WizardCalculatorForm
           apiEndpoint="/api/charts/transit"
           storageKey="transit_birth_data"
           onResult={setResult}
         />
-      </div>
-      {result && (
+      ) : (
         <>
           <div className="flex justify-center">
             <ChartShareButton

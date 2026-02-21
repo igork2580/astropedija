@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
-from app.routers import charts, calculate, sky, horoscopes, geo, share
+from app.routers import charts, calculate, sky, horoscopes, geo, share, auth
 
 app = FastAPI(
     title=settings.app_name,
@@ -25,6 +25,7 @@ app.include_router(sky.router, prefix="/api/v1/sky", tags=["sky"])
 app.include_router(horoscopes.router, prefix="/api/v1/horoscopes", tags=["horoscopes"])
 app.include_router(geo.router, prefix="/api/v1/geo", tags=["geo"])
 app.include_router(share.router, prefix="/api/v1/share", tags=["share"])
+app.include_router(auth.router, prefix="/api/v1/auth", tags=["auth"])
 
 
 @app.get("/health")

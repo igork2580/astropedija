@@ -1,16 +1,16 @@
-const BASE_URL = "https://astropedija.com";
+import { brand } from "./brand";
 
 export function generateWebSiteSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Astropedija",
-    url: BASE_URL,
-    description: "Enciklopedija astrologije - besplatni kalkulatori, natalne karte, horoskop i sve o zvezdama.",
-    inLanguage: "sr",
+    name: brand.name,
+    url: brand.url,
+    description: brand.shortDescription,
+    inLanguage: brand.language,
     potentialAction: {
       "@type": "SearchAction",
-      target: `${BASE_URL}/pretraga?q={search_term_string}`,
+      target: `${brand.url}/pretraga?q={search_term_string}`,
       "query-input": "required name=search_term_string",
     },
   };
@@ -28,12 +28,12 @@ export function generateArticleSchema(params: {
     "@type": "Article",
     headline: params.title,
     description: params.description,
-    url: `${BASE_URL}${params.url}`,
-    inLanguage: "sr",
+    url: `${brand.url}${params.url}`,
+    inLanguage: brand.language,
     publisher: {
       "@type": "Organization",
-      name: "Astropedija",
-      url: BASE_URL,
+      name: brand.name,
+      url: brand.url,
     },
     datePublished: params.datePublished || "2026-01-01",
     dateModified: params.dateModified || new Date().toISOString().split("T")[0],

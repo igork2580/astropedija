@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { mainNavigation, type NavItem } from "@/data/navigation";
+import { brand } from "@/lib/brand";
 
 /* ------------------------------------------------------------------ */
 /*  Accordion section for a single nav group                          */
@@ -153,7 +154,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             className="text-xl font-bold text-text-primary"
           >
             <span className="mr-2">&#9733;</span>
-            Astropedija
+            {brand.name}
           </Link>
 
           <button

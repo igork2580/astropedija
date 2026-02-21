@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="64" fill="#0f0c29"/>
+  <text x="256" y="280" text-anchor="middle" font-size="200" fill="#6466f1" font-family="sans-serif">&#9733;</text>
+  <text x="256" y="400" text-anchor="middle" font-size="56" fill="#e2e0ff" font-family="sans-serif" font-weight="bold">AstroPut</text>
+</svg>

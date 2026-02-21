@@ -1,19 +1,15 @@
 import re
-import os
 
 
-def process_svg(svg_path: str) -> str:
-    """Read and process Kerykeion SVG for web display.
+def process_svg(svg_content: str) -> str:
+    """Process Kerykeion SVG string for web display.
 
     - Adds viewBox if missing
     - Removes hardcoded width/height for responsiveness
     - Returns SVG string
     """
-    if not os.path.exists(svg_path):
+    if not svg_content:
         return ""
-
-    with open(svg_path, "r", encoding="utf-8") as f:
-        svg_content = f.read()
 
     # Remove hardcoded width and height, keep viewBox
     svg_content = re.sub(r'\s+width="[^"]*"', "", svg_content)
@@ -24,11 +20,5 @@ def process_svg(svg_path: str) -> str:
         svg_content = svg_content.replace(
             "<svg", '<svg viewBox="0 0 800 800"', 1
         )
-
-    # Clean up the temporary file
-    try:
-        os.remove(svg_path)
-    except OSError:
-        pass
 
     return svg_content

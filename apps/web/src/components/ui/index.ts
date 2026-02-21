@@ -33,3 +33,4 @@ export {
   type TabsTriggerProps,
   type TabsContentProps,
 } from "./Tabs";
+export { AnimatedPage } from "./AnimatedPage";

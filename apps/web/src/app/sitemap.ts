@@ -4,8 +4,9 @@ import { planets } from "@/data/planets";
 import { houses } from "@/data/houses";
 import { aspects } from "@/data/aspects";
 import { getAllSlugs } from "@/lib/content";
+import { brand } from "@/lib/brand";
 
-const BASE_URL = "https://astropedija.com";
+const BASE_URL = brand.url;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [

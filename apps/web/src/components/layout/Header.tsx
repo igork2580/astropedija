@@ -5,6 +5,9 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { mainNavigation, type NavItem } from "@/data/navigation";
 import { MobileNav } from "./MobileNav";
+import { ThemeToggle } from "./ThemeToggle";
+import { UserMenu } from "@/components/auth";
+import { brand } from "@/lib/brand";
 
 /* ------------------------------------------------------------------ */
 /*  Desktop dropdown for a single nav item                            */
@@ -114,7 +117,7 @@ export function Header() {
             className="flex items-center gap-2 text-xl font-bold tracking-tight text-text-primary transition-colors hover:text-primary"
           >
             <span className="text-2xl">&#9733;</span>
-            Astropedija
+            {brand.name}
           </Link>
 
           {/* Desktop navigation */}
@@ -124,7 +127,10 @@ export function Header() {
             ))}
           </nav>
 
-          {/* Mobile hamburger */}
+          {/* Theme toggle + User menu + Mobile hamburger */}
+          <div className="flex items-center gap-1">
+            <ThemeToggle />
+            <UserMenu />
           <button
             type="button"
             onClick={() => setMobileOpen(true)}
@@ -149,6 +155,7 @@ export function Header() {
               />
             </svg>
           </button>
+          </div>
         </div>
       </header>
 
