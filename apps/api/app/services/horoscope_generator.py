@@ -36,25 +36,40 @@ async def _generate_horoscope(sign: str, horo_type: str, period_start: date, per
 
     if horo_type == "daily":
         prompt = (
-            f"Napisi dnevni horoskop za {sign_name} za {period_start.isoformat()}.\n"
-            f"Duzina: 3-4 recenice. Budi konkretan — pomeni bar dve zivotne oblasti."
+            f"Napisi dnevni horoskop za {sign_name} za {period_start.isoformat()}.\n\n"
+            f"Format:\n"
+            f"**{sign_name.upper()} - [datum]**\n\n"
+            f"**Posao:** 1-2 recenice.\n\n"
+            f"**Ljubav:** 1-2 recenice.\n\n"
+            f"**Savet dana:** Jedna konkretna, prakticna preporuka.\n\n"
+            f"Budi konkretan i direktan. Svaka sekcija u novom pasusu."
         )
-        max_tokens = 300
+        max_tokens = 400
     elif horo_type == "weekly":
         prompt = (
             f"Napisi nedeljni horoskop za {sign_name} za period "
-            f"{period_start.isoformat()} do {period_end.isoformat()}.\n"
-            f"Duzina: 5-7 recenica. Podeli po danima ili po oblastima (ljubav, posao, zdravlje). "
-            f"Daj konkretan savet za nedelju."
+            f"{period_start.isoformat()} do {period_end.isoformat()}.\n\n"
+            f"Format:\n"
+            f"**{sign_name.upper()} - [datumi]**\n\n"
+            f"**Posao i finansije:** 2-3 recenice.\n\n"
+            f"**Ljubav:** 2-3 recenice.\n\n"
+            f"**Zdravlje:** 1-2 recenice.\n\n"
+            f"**Savet nedelje:** Jedna konkretna preporuka.\n\n"
+            f"Svaka sekcija u novom pasusu. Budi konkretan — pomeni dane u nedelji."
         )
         max_tokens = 500
     else:  # monthly
         prompt = (
             f"Napisi mesecni horoskop za {sign_name} za mesec koji pocinje "
-            f"{period_start.isoformat()}.\n"
-            f"Duzina: 8-12 recenica (2-3 pasusa). Pokrij: opsti ton meseca, ljubav i odnose, "
-            f"karijeru i finansije, zdravlje. Pomeni kljucne datume ili periode u mesecu "
-            f"kada treba obratiti paznju. Zavrsi sa konkretnim savetom."
+            f"{period_start.isoformat()}.\n\n"
+            f"Format:\n"
+            f"**{sign_name.upper()} - [mesec godina]**\n\n"
+            f"**Opsti ton meseca:** 2-3 recenice.\n\n"
+            f"**Karijera i finansije:** 2-3 recenice sa konkretnim datumima.\n\n"
+            f"**Ljubav i odnosi:** 2-3 recenice sa konkretnim periodima.\n\n"
+            f"**Zdravlje:** 1-2 recenice.\n\n"
+            f"**Savet meseca:** Jedna konkretna, prakticna preporuka.\n\n"
+            f"Svaka sekcija u novom pasusu. Pomeni konkretne datume i periode."
         )
         max_tokens = 800
 
