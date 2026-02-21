@@ -1,13 +1,52 @@
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { brand } from "@/lib/brand";
 import { SharedChartDisplay } from "./SharedChartDisplay";
+
+const API_URL = process.env.API_URL || "http://localhost:8000";
+
+const CHART_TYPE_TITLES: Record<string, string> = {
+  natal: "Natalna karta",
+  synastry: "Uporedna karta (Sinastija)",
+  composite: "Kompozit horoskop",
+  transit: "Tranziti",
+  "solar-return": "Solarni horoskop",
+};
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
+
+  let chartTypeTitle = "Astroloska karta";
+  try {
+    const res = await fetch(`${API_URL}/api/v1/share/${slug}`, { next: { revalidate: 3600 } });
+    if (res.ok) {
+      const data = await res.json();
+      chartTypeTitle = CHART_TYPE_TITLES[data.chart_type] || chartTypeTitle;
+    }
+  } catch {
+    // Fall back to generic title
+  }
+
+  const title = `${chartTypeTitle} — ${brand.name}`;
+  const description = `Pogledaj astrolosku kartu kreiranu na ${brand.name}-u — besplatni astroloski kalkulator.`;
+  const url = `${brand.url}/chart/${slug}`;
+
   return {
-    title: `Deljena karta - ${slug}`,
-    description: "Pogledajte astrolosku kartu deljenu putem Astropedije.",
-    robots: { index: false, follow: false },
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url,
+      type: "website",
+      siteName: brand.name,
+      locale: brand.locale,
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description,
+    },
   };
 }
 
