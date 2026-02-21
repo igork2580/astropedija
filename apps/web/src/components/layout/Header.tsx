@@ -114,10 +114,10 @@ export function Header() {
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center gap-2 text-xl font-bold tracking-tight text-text-primary transition-colors hover:text-primary"
+            className="flex items-center gap-2 text-xl font-bold tracking-tight transition-colors hover:opacity-80"
           >
-            <span className="text-2xl">&#9733;</span>
-            {brand.name}
+            <span className="text-2xl text-amber-400">&#9733;</span>
+            <span className="text-amber-400">{brand.name}</span>
           </Link>
 
           {/* Desktop navigation */}
