@@ -101,6 +101,22 @@ export function ChartShareButton({
       const data = await res.json();
       const url = `${window.location.origin}/chart/${data.share_slug}`;
       setShareUrl(url);
+
+      // Try native share dialog first (works great on mobile)
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: "Moja natalna karta — AstroPut",
+            text: SHARE_TEXT,
+            url,
+          });
+          // User shared successfully — still show the saved state as fallback
+        } catch {
+          // User cancelled or share failed — that's fine
+        }
+      }
+
+      // Always land on "saved" state with social buttons + copy
       setStatus("saved");
       await navigator.clipboard.writeText(url);
       setCopied(true);
