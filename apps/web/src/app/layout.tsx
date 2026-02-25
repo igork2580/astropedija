@@ -19,7 +19,14 @@ export const metadata: Metadata = {
     locale: brand.locale,
     siteName: brand.name,
   },
+  twitter: {
+    card: "summary_large_image",
+    site: "@astroput",
+  },
   manifest: "/manifest.json",
+  alternates: {
+    canonical: "/",
+  },
 };
 
 /** Inline script to prevent FOUC — sets data-theme before first paint. */

@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const item = getContentBySlug(CATEGORY, slug);
   if (!item) return {};
-  return { title: item.frontmatter.title, description: item.frontmatter.description };
+  return { title: item.frontmatter.title, description: item.frontmatter.description, alternates: { canonical: `/planete/${slug}` } };
 }
 
 export default async function PlanetaPage({ params }: { params: Promise<{ slug: string }> }) {

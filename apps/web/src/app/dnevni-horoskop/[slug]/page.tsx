@@ -16,6 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `Dnevni horoskop - ${sign.name}`,
     description: `Pročitajte dnevni horoskop za ${sign.name}. Saznajte šta vam zvezde poručuju danas.`,
+    alternates: { canonical: `/dnevni-horoskop/${slug}` },
   };
 }
 
