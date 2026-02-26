@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getSignBySlug, getAllSignSlugs } from "@/data/zodiac-signs";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { HoroscopeContent, HoroscopeTypeTabs } from "@/components/horoscope";
+import { generateHoroscopeSchema } from "@/lib/jsonld";
 
 export const revalidate = 86400;
 
@@ -25,8 +26,19 @@ export default async function NedeljniHoroskopSignPage({ params }: { params: Pro
   const sign = getSignBySlug(slug);
   if (!sign) return null;
 
+  const horoscopeSchema = generateHoroscopeSchema({
+    signName: sign.name,
+    type: "nedeljni",
+    url: `/nedeljni-horoskop/${slug}`,
+    description: `Nedeljni horoskop za ${sign.name}. Planirajte nedelju uz astroloski vodic.`,
+  });
+
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(horoscopeSchema) }}
+      />
       <Breadcrumbs
         items={[
           { label: "Početna", href: "/" },

@@ -1,5 +1,6 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getContentBySlug } from "@/lib/content";
+import { getContentBySlug, getAllContent } from "@/lib/content";
 import { generateArticleSchema } from "@/lib/jsonld";
 import { MDXRenderer } from "./MDXRenderer";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
@@ -29,6 +30,11 @@ export function ContentPage({
     url: `/${category}/${slug}`,
   });
 
+  const allItems = getAllContent(category);
+  const related = allItems
+    .filter((i) => i.slug !== slug)
+    .slice(0, 6);
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <script
@@ -55,6 +61,29 @@ export function ContentPage({
           <div className="mt-8">
             <MDXRenderer source={item.content} />
           </div>
+          {related.length > 0 && (
+            <nav className="mt-12 border-t border-border pt-8">
+              <h2 className="text-xl font-bold">Povezani clanci</h2>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                {related.map((r) => (
+                  <Link
+                    key={r.slug}
+                    href={`/${category}/${r.slug}`}
+                    className="rounded-xl border border-border bg-surface p-4 transition-all hover:border-primary/50 hover:bg-surface-hover"
+                  >
+                    <span className="font-semibold text-text-primary">
+                      {r.frontmatter.title}
+                    </span>
+                    {r.frontmatter.description && (
+                      <p className="mt-1 text-sm text-text-muted line-clamp-2">
+                        {r.frontmatter.description}
+                      </p>
+                    )}
+                  </Link>
+                ))}
+              </div>
+            </nav>
+          )}
         </div>
         <aside className="hidden lg:block">
           <div className="sticky top-24">

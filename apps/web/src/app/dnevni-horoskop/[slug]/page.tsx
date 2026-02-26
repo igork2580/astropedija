@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getSignBySlug, getAllSignSlugs } from "@/data/zodiac-signs";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { HoroscopeContent, HoroscopeTypeTabs } from "@/components/horoscope";
+import { generateHoroscopeSchema } from "@/lib/jsonld";
 
 export const revalidate = 3600;
 
@@ -25,8 +26,19 @@ export default async function DnevniHoroskopSignPage({ params }: { params: Promi
   const sign = getSignBySlug(slug);
   if (!sign) return null;
 
+  const horoscopeSchema = generateHoroscopeSchema({
+    signName: sign.name,
+    type: "dnevni",
+    url: `/dnevni-horoskop/${slug}`,
+    description: `Dnevni horoskop za ${sign.name}. Saznajte sta vam zvezde porucuju danas.`,
+  });
+
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(horoscopeSchema) }}
+      />
       <Breadcrumbs
         items={[
           { label: "Početna", href: "/" },
