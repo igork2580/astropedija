@@ -36,8 +36,8 @@ export default async function MesecniHoroskopSignPage({ params }: { params: Prom
       />
       <div className="mt-6 text-center">
         <span className="text-5xl">{sign.symbol}</span>
-        <h1 className="mt-4 text-3xl font-bold">Mesečni horoskop - {sign.name}</h1>
-        <p className="mt-2 text-text-muted">{sign.dateRange}</p>
+        <h1 className="mt-4 text-3xl font-bold">Mesecni horoskop - {sign.name}</h1>
+        <p className="mt-2 text-text-muted">{sign.element} · {sign.quality} · Vladar: {sign.ruler}</p>
       </div>
       <div className="mt-6 flex justify-center">
         <HoroscopeTypeTabs sign={slug} activeType="mesecni" />
