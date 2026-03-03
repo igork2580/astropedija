@@ -31,6 +31,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/natalna-karta-tranziti`, lastModified: contentDate, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/solarni-horoskop`, lastModified: contentDate, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/numerologija-kalkulator`, lastModified: contentDate, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE_URL}/podznak-kalkulator`, lastModified: contentDate, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE_URL}/sunce-mesec-podznak`, lastModified: contentDate, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE_URL}/sredina-neba`, lastModified: contentDate, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE_URL}/davison-karta`, lastModified: contentDate, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE_URL}/progresivna-karta`, lastModified: contentDate, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE_URL}/tranziti`, lastModified: contentDate, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/trenutne-planete`, lastModified: today, changeFrequency: "hourly", priority: 0.7 },
     { url: `${BASE_URL}/meseceve-faze`, lastModified: today, changeFrequency: "daily", priority: 0.7 },
     { url: `${BASE_URL}/planete-po-znakovima`, lastModified: contentDate, changeFrequency: "monthly", priority: 0.8 },
@@ -75,6 +81,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  // Individual planet position pages (sunce-u-horoskopu etc.)
+  const planetHoroscopeSlugs = ["sunce", "mesec", "merkur", "venera", "mars", "jupiter", "saturn", "uran", "neptun", "pluton"];
+  const planetPositionPages: MetadataRoute.Sitemap = planetHoroscopeSlugs.map((p) => ({
+      url: `${BASE_URL}/${p}-u-horoskopu`,
+      lastModified: contentDate,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    }));
+
   // Dynamic MDX content pages
   const contentCategories = [
     "planete-po-znakovima",
@@ -98,6 +113,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...planetPages,
     ...housePages,
     ...aspectPages,
+    ...planetPositionPages,
     ...contentPages,
   ];
 }

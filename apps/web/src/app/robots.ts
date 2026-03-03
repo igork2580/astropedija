@@ -6,6 +6,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      disallow: ["/profil/", "/moje-karte/", "/premium/", "/prijava/", "/registracija/"],
     },
     sitemap: `${brand.url}/sitemap.xml`,
   };

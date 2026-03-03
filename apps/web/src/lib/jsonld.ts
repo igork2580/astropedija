@@ -9,6 +9,14 @@ export function generateWebSiteSchema() {
     description: brand.shortDescription,
     inLanguage: brand.language,
     publisher: generateOrganizationSchema(),
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${brand.url}/znakovi?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
   };
 }
 
@@ -22,6 +30,25 @@ export function generateOrganizationSchema() {
       url: `${brand.url}/icons/icon-512x512.svg`,
     },
     sameAs: [],
+  };
+}
+
+export function generateSoftwareAppSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: brand.name,
+    url: brand.url,
+    description: brand.shortDescription,
+    applicationCategory: "LifestyleApplication",
+    operatingSystem: "All",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "RSD",
+    },
+    inLanguage: brand.language,
+    author: generateOrganizationSchema(),
   };
 }
 
@@ -42,7 +69,7 @@ export function generateArticleSchema(params: {
     image: `${brand.url}/opengraph-image`,
     author: generateOrganizationSchema(),
     publisher: generateOrganizationSchema(),
-    datePublished: params.datePublished || "2026-01-01",
+    datePublished: params.datePublished || "2026-02-15",
     dateModified: params.dateModified || new Date().toISOString().split("T")[0],
     mainEntityOfPage: {
       "@type": "WebPage",
@@ -51,7 +78,9 @@ export function generateArticleSchema(params: {
   };
 }
 
-export function generateFAQSchema(questions: { question: string; answer: string }[]) {
+export function generateFAQSchema(
+  questions: { question: string; answer: string }[],
+) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -93,5 +122,43 @@ export function generateHoroscopeSchema(params: {
       "@type": "WebPage",
       "@id": `${brand.url}${params.url}`,
     },
+  };
+}
+
+export function generateBreadcrumbSchema(
+  items: { name: string; url?: string }[],
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      ...(item.url ? { item: `${brand.url}${item.url}` } : {}),
+    })),
+  };
+}
+
+export function generateCalculatorSchema(params: {
+  name: string;
+  description: string;
+  url: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: params.name,
+    description: params.description,
+    url: `${brand.url}${params.url}`,
+    applicationCategory: "LifestyleApplication",
+    operatingSystem: "All",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "RSD",
+    },
+    inLanguage: brand.language,
+    author: generateOrganizationSchema(),
   };
 }
