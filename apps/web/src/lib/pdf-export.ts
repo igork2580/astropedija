@@ -77,7 +77,7 @@ export async function exportChartToPdf(
   pdf.setFontSize(8);
   pdf.setTextColor(120, 120, 130);
   pdf.text(
-    `${brand.url} — ${brand.copyright}`,
+    `${brand.url} | ${brand.copyright}`,
     margin,
     pageHeight - 8,
   );

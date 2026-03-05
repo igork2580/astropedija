@@ -5,7 +5,7 @@ import { TransitCalendar } from "@/components/sky/TransitCalendar";
 export const metadata: Metadata = {
   title: "Nadolazeći tranziti",
   description:
-    "Pogledajte nadolazeće astrološke tranzite — ulasci planeta u nove znakove, retrograde i važni aspekti.",
+    "Pogledajte nadolazece astroloske tranzite: ulasci planeta u nove znakove, retrograde i vazni aspekti.",
 };
 
 export default function TransitsPage() {
@@ -22,7 +22,7 @@ export default function TransitsPage() {
         Nadolazeći tranziti
       </h1>
       <p className="mt-3 text-lg text-text-secondary">
-        Pratite planetarne tranzite — ulasci u nove znakove, retrograde i
+        Pratite planetarne tranzite: ulasci u nove znakove, retrograde i
         direktne stanice. Saznajte šta vas očekuje u narednim danima.
       </p>
       <div className="mt-8">

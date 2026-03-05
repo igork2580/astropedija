@@ -22,7 +22,7 @@ export default function ProgressedChartPage() {
         Progresivna karta
       </h1>
       <p className="mt-3 text-lg text-text-secondary">
-        Sekundarne progresije koriste metodu &quot;dan za godinu&quot; — svaki
+        Sekundarne progresije koriste metodu &quot;dan za godinu&quot;. Svaki
         dan posle rođenja odgovara jednoj godini vašeg života. Otkrijte kako se
         vaše planetarne energije razvijaju tokom vremena.
       </p>

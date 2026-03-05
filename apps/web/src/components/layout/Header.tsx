@@ -101,6 +101,16 @@ function NavDropdown({ item }: { item: NavItem }) {
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    function handleScroll() {
+      setScrolled(window.scrollY > 8);
+    }
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
@@ -108,6 +118,8 @@ export function Header() {
         className={cn(
           "sticky top-0 z-40 w-full",
           "border-b border-border bg-bg-start/80 backdrop-blur-xl",
+          "transition-shadow duration-300",
+          scrolled && "shadow-lg shadow-black/10",
         )}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -121,7 +133,7 @@ export function Header() {
           </Link>
 
           {/* Desktop navigation */}
-          <nav className="hidden items-center gap-1 md:flex">
+          <nav className="hidden items-center gap-1 lg:flex">
             {mainNavigation.map((item) => (
               <NavDropdown key={item.href} item={item} />
             ))}
@@ -131,30 +143,30 @@ export function Header() {
           <div className="flex items-center gap-1">
             <ThemeToggle />
             <UserMenu />
-          <button
-            type="button"
-            onClick={() => setMobileOpen(true)}
-            className={cn(
-              "inline-flex items-center justify-center rounded-lg p-2 md:hidden",
-              "text-text-secondary hover:bg-surface-hover hover:text-text-primary",
-              "transition-colors duration-200",
-            )}
-            aria-label="Otvori meni"
-          >
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
+            <button
+              type="button"
+              onClick={() => setMobileOpen(true)}
+              className={cn(
+                "inline-flex items-center justify-center rounded-lg p-2 lg:hidden",
+                "text-text-secondary hover:bg-surface-hover hover:text-text-primary",
+                "transition-colors duration-200",
+              )}
+              aria-label="Otvori meni"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
           </div>
         </div>
       </header>

@@ -17,7 +17,7 @@ export function StepTime({ data, onChange, prefix }: StepTimeProps) {
 
   return (
     <WizardStep
-      title={prefix ? `${prefix} — Vreme rođenja` : "Vreme rođenja"}
+      title={prefix ? `${prefix}, vreme rodjenja` : "Vreme rodjenja"}
       description="Tačno vreme omogućava preciznije kuće i podznak"
     >
       <div className="grid grid-cols-2 gap-3">

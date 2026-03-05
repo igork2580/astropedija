@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { mainNavigation, type NavItem } from "@/data/navigation";
 import { brand } from "@/lib/brand";
@@ -13,12 +14,17 @@ import { brand } from "@/lib/brand";
 function AccordionSection({
   item,
   onNavigate,
+  currentPath,
 }: {
   item: NavItem;
   onNavigate: () => void;
+  currentPath: string;
 }) {
   const [expanded, setExpanded] = useState(false);
   const hasChildren = item.children && item.children.length > 0;
+  const isActive =
+    currentPath === item.href ||
+    item.children?.some((c) => currentPath.startsWith(c.href));
 
   return (
     <div className="border-b border-border last:border-b-0">
@@ -28,7 +34,9 @@ function AccordionSection({
           onClick={onNavigate}
           className={cn(
             "flex-1 px-6 py-4 text-lg font-medium transition-colors duration-150",
-            "text-text-primary hover:text-primary",
+            isActive
+              ? "text-primary"
+              : "text-text-primary hover:text-primary",
           )}
         >
           {item.label}
@@ -43,6 +51,7 @@ function AccordionSection({
               "text-text-muted hover:text-text-primary transition-colors duration-150",
             )}
             aria-label={expanded ? "Zatvori" : "Otvori"}
+            aria-expanded={expanded}
           >
             <svg
               className={cn(
@@ -66,19 +75,24 @@ function AccordionSection({
 
       {hasChildren && expanded && (
         <div className="bg-surface pb-2">
-          {item.children!.map((child) => (
-            <Link
-              key={child.href}
-              href={child.href}
-              onClick={onNavigate}
-              className={cn(
-                "block px-10 py-3 text-base transition-colors duration-150",
-                "text-text-secondary hover:text-text-primary hover:bg-surface-hover",
-              )}
-            >
-              {child.label}
-            </Link>
-          ))}
+          {item.children!.map((child) => {
+            const isChildActive = currentPath === child.href;
+            return (
+              <Link
+                key={child.href}
+                href={child.href}
+                onClick={onNavigate}
+                className={cn(
+                  "block px-10 py-3 text-base transition-colors duration-150",
+                  isChildActive
+                    ? "text-primary bg-surface-hover"
+                    : "text-text-secondary hover:text-text-primary hover:bg-surface-hover",
+                )}
+              >
+                {child.label}
+              </Link>
+            );
+          })}
         </div>
       )}
     </div>
@@ -95,6 +109,8 @@ interface MobileNavProps {
 }
 
 export function MobileNav({ isOpen, onClose }: MobileNavProps) {
+  const pathname = usePathname();
+
   // Lock body scroll when open
   useEffect(() => {
     if (isOpen) {
@@ -121,12 +137,15 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
   return (
     <div
       className={cn(
-        "fixed inset-0 z-50 md:hidden",
+        "fixed inset-0 z-50 lg:hidden",
         "transition-all duration-300",
         isOpen
           ? "visible opacity-100"
           : "invisible opacity-0 pointer-events-none",
       )}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Navigacija"
     >
       {/* Backdrop */}
       <div
@@ -142,7 +161,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
           "bg-gradient-to-b from-bg-start via-bg-mid to-bg-end",
           "border-l border-border shadow-2xl",
           "flex flex-col",
-          "transition-transform duration-300",
+          "transition-transform duration-300 ease-out",
           isOpen ? "translate-x-0" : "translate-x-full",
         )}
       >
@@ -153,8 +172,8 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             onClick={onClose}
             className="text-xl font-bold text-text-primary"
           >
-            <span className="mr-2">&#9733;</span>
-            {brand.name}
+            <span className="mr-2 text-amber-400">&#9733;</span>
+            <span className="text-amber-400">{brand.name}</span>
           </Link>
 
           <button
@@ -184,12 +203,13 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
         </div>
 
         {/* Nav links */}
-        <nav className="flex-1 overflow-y-auto">
+        <nav className="flex-1 overflow-y-auto overscroll-contain">
           {mainNavigation.map((item) => (
             <AccordionSection
               key={item.href}
               item={item}
               onNavigate={onClose}
+              currentPath={pathname}
             />
           ))}
         </nav>

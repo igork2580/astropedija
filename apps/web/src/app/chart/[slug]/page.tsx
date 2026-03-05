@@ -27,8 +27,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     // Fall back to generic title
   }
 
-  const title = `${chartTypeTitle} — ${brand.name}`;
-  const description = `Pogledaj astrolosku kartu kreiranu na ${brand.name}-u — besplatni astroloski kalkulator.`;
+  const title = `${chartTypeTitle} | ${brand.name}`;
+  const description = `Pogledaj astrolosku kartu kreiranu na ${brand.name}-u, besplatnom astroloskom kalkulatoru.`;
   const url = `${brand.url}/chart/${slug}`;
 
   return {

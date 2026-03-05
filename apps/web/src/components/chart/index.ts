@@ -6,4 +6,5 @@ export { ChartShareButton } from "./ChartShareButton";
 export { ChartInterpretation } from "./ChartInterpretation";
 export { PdfExportButton } from "./PdfExportButton";
 export { PatternDisplay } from "./PatternDisplay";
+export { ChartResultSkeleton } from "./ChartResultSkeleton";
 export { ZodiacWheel, InterpretationPanel } from "./interactive";

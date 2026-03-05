@@ -57,7 +57,7 @@ export function Footer() {
     <footer className="border-t border-border bg-bg-start/90">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Columns */}
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 md:grid-cols-4">
           {footerColumns.map((column) => (
             <div key={column.title}>
               <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-text-primary">
@@ -92,14 +92,35 @@ export function Footer() {
             href="/"
             className="text-lg font-bold text-text-primary transition-colors hover:text-primary"
           >
-            <span className="mr-1">&#9733;</span>
-            {brand.name}
+            <span className="mr-1 text-amber-400">&#9733;</span>
+            <span className="text-amber-400">{brand.name}</span>
           </Link>
 
           {/* Copyright */}
-          <p className="text-sm text-text-muted">
+          <p className="text-sm text-text-muted text-center sm:text-left">
             {brand.copyright}
           </p>
+
+          {/* Back to top */}
+          <a
+            href="#main-content"
+            className="hidden text-sm text-text-muted transition-colors duration-150 hover:text-primary sm:inline-flex sm:items-center sm:gap-1"
+          >
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M5 15l7-7 7 7"
+              />
+            </svg>
+            Nazad na vrh
+          </a>
         </div>
       </div>
     </footer>

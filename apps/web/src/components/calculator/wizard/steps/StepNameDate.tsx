@@ -17,7 +17,7 @@ export function StepNameDate({ data, onChange, prefix }: StepNameDateProps) {
 
   return (
     <WizardStep
-      title={prefix ? `${prefix} — Ime i datum` : "Ime i datum rođenja"}
+      title={prefix ? `${prefix}, ime i datum` : "Ime i datum rodjenja"}
       description="Unesite ime i tačan datum rođenja"
     >
       <div className="space-y-4">

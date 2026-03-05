@@ -14,7 +14,7 @@ export default function TrenutnePlanetePage() {
       <h1 className="mt-6 text-3xl font-bold sm:text-4xl">Trenutne planete</h1>
       <p className="mt-3 text-lg text-text-secondary">
         Trenutne pozicije Sunca, Meseca, Merkura, Venere, Marsa, Jupitera, Saturna,
-        Urana, Neptuna i Plutona — plus Severni i Južni Mesečev čvor. Referentna
+        Urana, Neptuna i Plutona, plus Severni i Juzni Mesecev cvor. Referentna
         lokacija: Beograd. Podaci se ažuriraju svakih 5 minuta na osnovu Swiss Ephemeris proračuna.
       </p>
       <div className="mt-8">

@@ -5,7 +5,7 @@ import { brand } from "@/lib/brand";
 export const metadata: Metadata = {
   title: "O nama",
   description:
-    "AstroPut: besplatni astrološki kalkulatori zasnovani na Swiss Ephemeris, enciklopedija sa 600+ članaka i dnevni horoskop — sve na srpskom.",
+    "AstroPut: besplatni astroloski kalkulatori zasnovani na Swiss Ephemeris, enciklopedija sa 600+ clanaka i dnevni horoskop. Sve na srpskom.",
 };
 
 export default function ONamaPage() {
@@ -22,7 +22,7 @@ export default function ONamaPage() {
         <p>
           {brand.name} postoji zato što kvalitetan astrološki sadržaj na srpskom
           praktično ne postoji. Većina sajtova nudi prepisane horoskope i
-          površne opise znakova. Mi smo hteli nešto ozbiljnije — mesto gde
+          povrsne opise znakova. Mi smo hteli nesto ozbiljnije, mesto gde
           možete izračunati tačnu natalnu kartu, pogledati gde su planete sad,
           i zapravo razumeti šta to znači.
         </p>
@@ -31,15 +31,15 @@ export default function ONamaPage() {
         </h2>
         <p>
           Svi proračuni na sajtu koriste{" "}
-          <strong>Swiss Ephemeris</strong> — istu astronomsku biblioteku koju
+          <strong>Swiss Ephemeris</strong>, istu astronomsku biblioteku koju
           koriste profesionalni astrološki programi. To znači da su pozicije
           planeta tačne na delić lučne sekunde. Natalnu kartu, sinastiju,
-          solarni povratak, tranzite — sve računamo na istom nivou preciznosti
+          solarni povratak, tranzite. Sve racunamo na istom nivou preciznosti
           koji biste dobili u skupom desktop softveru.
         </p>
         <p>
           Pored kalkulatora, imamo enciklopediju sa{" "}
-          <strong>preko 600 članaka</strong> — znakovi, planete, kuće, aspekti,
+          <strong>preko 600 clanaka</strong>: znakovi, planete, kuce, aspekti,
           dignitet, fiksne zvezde. Svaki članak je pisan da bude razumljiv i
           onome ko tek počinje i onome ko već tumači karte.
         </p>
@@ -50,7 +50,7 @@ export default function ONamaPage() {
           Sajt je potpuno besplatan i ne zahteva registraciju. Nema paywall-a,
           nema „premium tumačenja", nema skrivenih troškova. Otvorite
           kalkulator, unesite podatke, dobijete rezultat. Smatramo da osnovni
-          astrološki alati treba da budu dostupni svima — naročito kad na
+          astroloski alati treba da budu dostupni svima, narocito kad na
           srpskom do sada nije bilo ničeg uporedivog.
         </p>
       </div>

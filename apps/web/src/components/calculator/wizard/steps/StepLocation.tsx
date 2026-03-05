@@ -23,7 +23,7 @@ export function StepLocation({ data, onChange, prefix }: StepLocationProps) {
 
   return (
     <WizardStep
-      title={prefix ? `${prefix} — Mesto rođenja` : "Mesto rođenja"}
+      title={prefix ? `${prefix}, mesto rodjenja` : "Mesto rodjenja"}
       description="Počnite da kucate i izaberite grad iz liste"
     >
       <LocationAutocomplete

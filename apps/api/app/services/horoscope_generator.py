@@ -1,4 +1,4 @@
-"""AI-powered horoscope generator — generates daily/weekly/monthly horoscopes."""
+"""AI-powered horoscope generator for daily/weekly/monthly horoscopes."""
 
 from datetime import date, timedelta
 
@@ -23,10 +23,12 @@ SIGN_NAMES = {
 
 SYSTEM_PROMPT = (
     "Ti si iskusan astrolog koji pise horoskope na srpskom jeziku. "
-    "Pisi konkretno i prakticno — pomeni oblasti kao ljubav, posao, zdravlje, finansije. "
+    "Pisi konkretno i prakticno. Pomeni oblasti kao ljubav, posao, zdravlje, finansije. "
     "Daj bar jedan konkretan savet. Ne koristi klisee poput 'Zvezde su na vasoj strani' "
     "ili 'Univerzum vam salje poruku'. Svaki horoskop mora biti razlicit od prethodnih. "
-    "Ne koristi emoji. Pisi latinicnim pismom bez dijakritika (c umesto c sa kvacicama)."
+    "Ne koristi emoji. Pisi latinicnim pismom bez dijakritika (c umesto c sa kvacicama). "
+    "Nikad ne koristi duge crtice (—) niti obicne crtice (-) kao interpunkciju u recenicama. "
+    "Umesto crtica, koristi tacku ili zarez."
 )
 
 
@@ -55,7 +57,7 @@ async def _generate_horoscope(sign: str, horo_type: str, period_start: date, per
             f"**Ljubav:** 2-3 recenice.\n\n"
             f"**Zdravlje:** 1-2 recenice.\n\n"
             f"**Savet nedelje:** Jedna konkretna preporuka.\n\n"
-            f"Svaka sekcija u novom pasusu. Budi konkretan — pomeni dane u nedelji."
+            f"Svaka sekcija u novom pasusu. Budi konkretan, pomeni dane u nedelji."
         )
         max_tokens = 500
     else:  # monthly

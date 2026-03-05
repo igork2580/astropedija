@@ -8,6 +8,11 @@
 - **Crons (VPS crontab):** Daily/weekly/monthly horoscope generation at 05:00 UTC via `curl POST http://127.0.0.1:8000/api/v1/horoscopes/generate/{period}`
 - **Infrastructure source of truth:** `C:\projects\websites\mvp_websitemanager\lib\sites.ts` — canonical config for all sites, backends, ports, databases, and crons. Update that file when changing infrastructure.
 
+## Shared Resources
+- **Credentials**: `G:\My Drive\tokens.toml` (Google Drive, synced). Never commit to git. Contains API keys for Vercel, Cloudflare, GitHub, Google Analytics, Anthropic, and other services. Read this file when you need tokens or account details. The file is organized by service (top-level like `[vercel]`, `[cloudflare]`) for shared infrastructure, and by project prefix (e.g. `[btsw.*]`) for project-specific credentials. When working on a specific project, reference only the relevant sections.
+- **Content writing rules (English)**: `G:\My Drive\content-rules-en.md`. Master content ruleset for English sites.
+- **Content writing rules (Serbian)**: `G:\My Drive\content-rules-sr.md`. Master content ruleset for Serbian sites. (Required for this project)
+
 ## Content Writing Rules
 
 **When writing any content** (page copy, descriptions, blog posts, meta tags, MDX files, any user-facing text):

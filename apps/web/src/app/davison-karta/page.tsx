@@ -24,8 +24,8 @@ export default function DavisonChartPage() {
       <p className="mt-3 text-lg text-text-secondary">
         Davison karta koristi srednju tačku u vremenu i prostoru između dva
         rođenja. Za razliku od kompozitne karte koja koristi srednje tačke
-        planeta, Davison karta stvara pravi horoskop za srednji trenutak —
-        jedinstveni pogled na energiju vašeg odnosa.
+        planeta, Davison karta stvara pravi horoskop za srednji trenutak i
+        pruza jedinstveni pogled na energiju vaseg odnosa.
       </p>
       <div className="mt-8">
         <DavisonCalculator />

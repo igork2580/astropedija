@@ -4,7 +4,7 @@ export const brand = {
   name: "AstroPut",
   domain: "astroput.com",
   url: "https://astroput.com",
-  tagline: "Astrologija na srpskom — precizno, besplatno, detaljno",
+  tagline: "Astrologija na srpskom. Precizno, besplatno, detaljno",
   description:
     "Besplatni astroloski kalkulatori sa preciznim proracunima: natalna karta, sinastija, tranziti, solarni horoskop. Enciklopedija sa 600+ clanaka o znakovima, planetama i kucama. Dnevni horoskop za sve znakove.",
   shortDescription:

@@ -111,7 +111,7 @@ export function ChartShareButton({
       if (navigator.share) {
         try {
           await navigator.share({
-            title: "Moja natalna karta — AstroPut",
+            title: "Moja natalna karta | AstroPut",
             text: SHARE_TEXT,
             url,
           });
